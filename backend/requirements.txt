@@ -1,0 +1,13 @@
+pandas
+matplotlib
+seaborn
+
+python-dotenv
+langchain
+langchain-openai
+langchain_google_genai
+langgraph
+streamlit
+
+langchain_community
+PyPDF2
