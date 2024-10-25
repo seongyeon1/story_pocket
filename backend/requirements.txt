@@ -11,3 +11,5 @@ streamlit
 
 langchain_community
 PyPDF2
+
+stability-sdk
