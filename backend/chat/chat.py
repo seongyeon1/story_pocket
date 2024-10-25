@@ -10,7 +10,6 @@ from dotenv import load_dotenv
 # API KEY 정보로드
 load_dotenv()
 
-
 # 프롬프트 정의
 prompt = ChatPromptTemplate.from_messages(
     [
