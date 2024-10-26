@@ -1,4 +1,3 @@
-from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder, PromptTemplate
 from langchain_community.chat_message_histories import ChatMessageHistory
@@ -9,11 +8,24 @@ from langchain_core.output_parsers import StrOutputParser
 from dotenv import load_dotenv
 import os
 
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+
 # 환경 변수 로드
 load_dotenv()
 
 # FastAPI 앱 초기화
 app = FastAPI()
+
+# CORS 설정 추가
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 모든 출처 허용
+    allow_credentials=True,
+    allow_methods=["*"],  # 모든 HTTP 메서드 허용
+    allow_headers=["*"],  # 모든 헤더 허용
+)
 
 # 프롬프트 정의
 prompt = ChatPromptTemplate.from_messages(

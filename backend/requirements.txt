@@ -1,6 +1,6 @@
-pandas
-matplotlib
-seaborn
+# pandas
+# matplotlib
+# seaborn
 
 python-dotenv
 langchain
@@ -13,3 +13,4 @@ langchain_community
 PyPDF2
 
 stability-sdk
+fastapi
