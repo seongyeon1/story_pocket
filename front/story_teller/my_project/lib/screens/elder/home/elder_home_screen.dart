@@ -41,8 +41,11 @@ class _ElderHomeScreenState extends State<ElderHomeScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text("원하시는 서비스를 선택해주세요."),
+          /* 메뉴사진 */
+          Image.asset("assets/image/grandma_grandpa.png"),
+          const SizedBox(height: 20),
           /* 메뉴화면 */
+          const Text("원하시는 서비스를 선택해주세요."),
           GridView.count(
             physics: const NeverScrollableScrollPhysics(), // 스크롤 비활성화
             shrinkWrap: true, // GridView 크기를 내용물에 맞게 조정
