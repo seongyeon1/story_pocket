@@ -1,16 +1,10 @@
-# pandas
-# matplotlib
-# seaborn
-
+fastapi
+uvicorn
 python-dotenv
-langchain
-langchain-openai
-langchain_google_genai
-langgraph
-streamlit
-
+pydantic
+# langchain_google_genai
+langchain_openai
+langchain_core
 langchain_community
-PyPDF2
 
 stability-sdk
-fastapi
