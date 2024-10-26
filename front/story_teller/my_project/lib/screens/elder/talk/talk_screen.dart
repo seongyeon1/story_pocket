@@ -22,7 +22,7 @@ class _TalkScreenState extends State<TalkScreen> {
   bool _isSpeaking = false;
   bool _showSuggestions = true; // 추천 질문 초기 표시 여부
   String _recognizedText = ''; // 실시간 사용자 말풍선 텍스트
-  String _responseText = 'AI가 대답을 기다리고 있어요...'; // 초기 AI 응답 텍스트
+  String _responseText = '안녕하세요! 오늘은 어떤 이야기를 할까요?'; // 초기 AI 응답 텍스트
   String _sessionId = 'session_id1'; // 세션 ID
   String sex = '할아버지'; // 성별 정보 (예: 할아버지, 할머니)
   Timer? _stopListeningTimer;
@@ -141,7 +141,7 @@ class _TalkScreenState extends State<TalkScreen> {
             child: ElevatedButton(
               onPressed: () {
                 setState(() {
-                  _recognizedText = randomSuggestions[index];
+                  _responseText = randomSuggestions[index];
                   _showSuggestions = false; // 추천 질문 클릭 시 추천 질문 숨기기
                 });
               },
@@ -236,7 +236,7 @@ class _TalkScreenState extends State<TalkScreen> {
                 child: SizedBox(
                   width: 200,
                   child: Text(
-                    "AI: $_responseText", // AI 응답 텍스트
+                    "$_responseText", // AI 응답 텍스트
                     textAlign: TextAlign.left,
                     style: speechBalloonText,
                   ),
