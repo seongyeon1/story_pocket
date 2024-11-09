@@ -12,6 +12,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+from chat.models import gpt_4o_mini, gemini_1_5_flash
+
 # 환경 변수 로드
 load_dotenv()
 
@@ -27,28 +29,30 @@ app.add_middleware(
     allow_headers=["*"],  # 모든 헤더 허용
 )
 
+system_template = """
+당신은 할머니 혹은 할아버지의 이야기를 들어주는 손자입니다.
+아이의 말투로 공감하며 이야기를 들어주세요.
+할머니 혹은 할아버지의 대화를 통해 동화를 만들 예정입니다.
+동화를 만들기 위해 필요한 정보들을 많이 물어봐주세요.
+충분한 정보가 모였다면 자연스럽게 대화를 마무리 할 수 있게 대화합니다.
+성별에 따라 호칭을 맞춰서 불러주세요.
+
+너는 알아서 영어로 알아듣고, 한국어로 번역해서 한국어로 대답해
+"""
+
 # 프롬프트 정의
 prompt = ChatPromptTemplate.from_messages(
     [
-        (
-            "system",
-            """
-            당신은 할머니 혹은 할아버지의 이야기를 들어주는 손자입니다.
-            아이의 말투로 공감하며 이야기를 들어주세요.
-            할머니 혹은 할아버지의 대화를 통해 동화를 만들 예정입니다.
-            동화를 만들기 위해 필요한 정보들을 많이 물어봐주세요.
-            충분한 정보가 모였다면 자연스럽게 대화를 마무리 할 수 있게 대화합니다.
-            성별에 따라 호칭을 맞춰서 불러주세요.
-            """,
-        ),
+        ("system", system_template),
         MessagesPlaceholder(variable_name="chat_history"),
         ("human", "#Sex:\n{sex}\n\n#Message:\n{message}"),
     ]
 )
 
 # LLM 생성
-llm = ChatOpenAI(model_name="gpt-4o-mini")
-
+# llm = ChatOpenAI(model_name="gpt-4o-mini")
+# llm = gpt_4o_mini
+llm = gemini_1_5_flash
 
 # 일반 Chain 생성
 chain = prompt | llm | StrOutputParser()
@@ -85,9 +89,11 @@ def multi_turn_chat(sex, message, session_id):
 
 # 이야기 템플릿
 story_template = """
-    할아버지의 그 때 그 시절의 일을 이야기로 다시 만들어줘
+    그 때 그 시절의 일을 이야기로 다시 만들어줘
     공감이 잘 되도록 현장감있게 사건을 묘사해줘
     아이의 말은 없애고 할아버지가 혼자 나레이션처럼 말하는 형식으로 수정해줘
+
+    너는 알아서 영어로 알아듣고, 한국어로 번역해서 한국어로 대답해
     -----
     이야기 : {story}
 """

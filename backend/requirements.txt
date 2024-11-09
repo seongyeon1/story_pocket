@@ -2,7 +2,7 @@ fastapi
 uvicorn
 python-dotenv
 pydantic
-# langchain_google_genai
+langchain-google-genai
 langchain_openai
 langchain_core
 langchain_community
