@@ -10,9 +10,9 @@ docker-compose up -d
 
 ---
 ## 2024.11.09 Update
-[x] gemini backend : `app.py`
-[x] code refactoring
+- [x] gemini backend : `app.py`
+- [x] code refactoring
 
 ## 추가 진행사항 (~11.20)
-[] 이미지 생성 api 연결
-[] prompt engineering
+- [ ] 이미지 생성 api 연결
+- [ ] prompt engineering
