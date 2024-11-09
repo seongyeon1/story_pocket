@@ -4,6 +4,8 @@ import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 from PIL import Image
 import io
 
+from langchain_core.output_parsers import StrOutputParser
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -14,8 +16,12 @@ stability_api = client.StabilityInference(
     verbose=True,
 )
 
+from .preprocessing import story_to_img_chain, description_to_prompt_chain
+
 # 이미지 생성 함수 정의
-def generate_image(prompt, width=512, height=512, steps=50):
+def generate_image(story, width=512, height=512, steps=50):
+    description = story_to_img_chain.invoke({"story": story})
+    prompt = description_to_prompt_chain.invoke({'description': description})
     answers = stability_api.generate(
         prompt=prompt,
         seed=992446758,

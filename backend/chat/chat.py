@@ -2,10 +2,9 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
-# from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
 
-from .models import gpt_4o_mini, gemini_1_5_flash
+from common import *
 from .prompts import *
 
 from dotenv import load_dotenv
