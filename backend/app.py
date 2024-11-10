@@ -128,13 +128,46 @@ async def generate_image_from_story(session_id: str, db: Session = Depends(get_d
     
     return StreamingResponse(img_byte_array, media_type="image/png")
 
+from fastapi.responses import StreamingResponse
+from zipfile import ZipFile
+import io
 
+# 여러 이미지 생성 및 저장 API
+@app.get("/generate-images/{session_id}")
+async def generate_images_from_story(session_id: str, db: Session = Depends(get_db)):
+    # DB에서 해당 session_id의 story_text 조회
+    story = db.query(Story).filter(Story.session_id == session_id).first()
+    if not story:
+        raise HTTPException(status_code=404, detail="Session ID not found")
 
-# # 데이터베이스 연결 설정
-# @app.on_event("startup")
-# async def startup():
-#     await database.connect()
+    # story_text를 여러 개의 묘사로 나누기
+    descriptions = story_to_img_chain.invoke({"story": story.story_text}).split('\n')
+    
+    # 묘사마다 프롬프트와 이미지 생성 및 저장
+    zip_io = io.BytesIO()
+    with ZipFile(zip_io, "w") as zip_file:
+        for idx, description in enumerate(descriptions):
+            prompt = description_to_prompt_chain.invoke({'description': description})
+            img = generate_image(story=prompt)
+            
+            # 이미지 바이트 배열 생성
+            img_byte_array = BytesIO()
+            img.save(img_byte_array, format="PNG")
+            img_byte_array.seek(0)
 
-# @app.on_event("shutdown")
-# async def shutdown():
-#     await database.disconnect()
+            # StoryCut 데이터베이스에 묘사, 프롬프트, 이미지 저장
+            story_cut = StoryCut(
+                story_id=story.session_id,
+                description=description,
+                image_prompt=prompt,
+                image_data=img_byte_array.getvalue()
+            )
+            db.add(story_cut)
+            
+            # ZIP 파일에 이미지 추가
+            zip_file.writestr(f"image_{idx+1}.png", img_byte_array.getvalue())
+
+        db.commit()
+
+    zip_io.seek(0)
+    return StreamingResponse(zip_io, media_type="application/zip", headers={"Content-Disposition": "attachment;filename=images.zip"})
