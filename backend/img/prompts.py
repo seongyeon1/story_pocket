@@ -35,7 +35,13 @@ description_to_prompt = """
 영어로만 작성해주세요.
 
 예시 :
-Fairy tale style, a quaint rural village scene set in past Korea, with peaceful scenery and a warm color palette. The main focus is a child [행동 묘사: 예시 - walking, playing, sharing a meal, etc.], surrounded by [주변 요소: rice fields, mountains, old houses, etc.]. The child is [간단한 소품과 동작: holding a small lunchbox, sitting on a grassy hill, etc.]. This scene captures a moment of [감정 및 분위기: joy, nostalgia, friendship, simplicity, etc.], with detailed touches in [구체적 디테일: traditional clothing, rustic architecture, natural elements, etc.]. The overall feeling is one of warmth and simplicity, evoking the timeless charm of a fairy tale illustration.
+Fairy tale style, a quaint rural village scene set in past Korea, with peaceful scenery and a warm color palette. 
+The main focus is a child [행동 묘사: 예시 - walking, playing, sharing a meal, etc.], 
+surrounded by [주변 요소: rice fields, mountains, old houses, etc.]. 
+The child is [간단한 소품과 동작: holding a small lunchbox, sitting on a grassy hill, etc.]. 
+This scene captures a moment of [감정 및 분위기: joy, nostalgia, friendship, simplicity, etc.], 
+with detailed touches in [구체적 디테일: traditional clothing, rustic architecture, natural elements, etc.]. 
+The overall feeling is one of warmth and simplicity, evoking the timeless charm of a fairy tale illustration.
 
 묘사 :
 {description}

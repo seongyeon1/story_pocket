@@ -46,7 +46,7 @@ def generate_images(story, width=512, height=512, steps=50):
 
     # 묘사(description)마다 프롬프트를 생성하고 이미지 생성
     images = []
-    for description in descriptions.split('\n'):  # 묘사를 여러 줄로 구분하는 경우
+    for description in descriptions.split('\n\n'):  # 묘사를 여러 줄로 구분하는 경우
         prompt = description_to_prompt_chain.invoke({'description': description})
         
         # Stability API를 사용해 이미지 생성

@@ -24,8 +24,8 @@ prompt = ChatPromptTemplate.from_messages(
 
 # llm 생성
 # llm = ChatOpenAI(model_name="gpt-4o-mini")
-# llm = gpt_4o_mini
-llm = gemini_1_5_flash
+llm = gpt_4o_mini
+# llm = gemini_1_5_flash
 
 # 일반 Chain 생성
 chain = prompt | llm | StrOutputParser()

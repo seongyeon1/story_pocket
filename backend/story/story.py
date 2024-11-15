@@ -3,7 +3,7 @@ from common import *
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder, PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-llm = gemini_pro
+llm = gpt_4o_mini
 
 story_prompt = PromptTemplate(
     template=story_template,

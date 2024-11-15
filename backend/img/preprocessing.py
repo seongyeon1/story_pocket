@@ -4,7 +4,7 @@ from common import *
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-llm = gemini_pro
+llm = gpt_4o_mini
 
 story_to_img_prompt = PromptTemplate(
     template=story_to_img,
