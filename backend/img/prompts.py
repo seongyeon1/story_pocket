@@ -29,20 +29,52 @@ story_to_imgs = """
 
 
 description_to_prompt = """
-묘사를 바탕으로 이미지를 생성하기 위한 이미지 프롬프트를 작성해주세요.
+## 지시사항
+이미지를 생성하기 위한 이미지 프롬프트를 작성해주세요.
 동화 스타일로, 이야기의 각 장면을 시각적으로 묘사해주세요.
 과거 한국의 시골 마을을 배경으로 하고, 전체적으로 동화 같은 부드러운 색채와 따뜻한 분위기를 강조해주세요.
-영어로만 작성해주세요.
 
-예시 :
-Fairy tale style, a quaint rural village scene set in past Korea, with peaceful scenery and a warm color palette. 
-The main focus is a child [행동 묘사: 예시 - walking, playing, sharing a meal, etc.], 
-surrounded by [주변 요소: rice fields, mountains, old houses, etc.]. 
-The child is [간단한 소품과 동작: holding a small lunchbox, sitting on a grassy hill, etc.]. 
-This scene captures a moment of [감정 및 분위기: joy, nostalgia, friendship, simplicity, etc.], 
-with detailed touches in [구체적 디테일: traditional clothing, rustic architecture, natural elements, etc.]. 
-The overall feeling is one of warmth and simplicity, evoking the timeless charm of a fairy tale illustration.
+아래의 작성법을 참고해서 영어로만 작성해주세요.
 
-묘사 :
+## 이미지 프롬프트 작성 방법
+① 주제(Subject)
+_ 생성하고 싶은 대상. 사람, 동물, 식물 등 가급적 구체적 묘사를 해주는 것이 좋다.
+“사람”이 아닌 “놀이터에서 그네에 앉아 있는 보라색 모자를 쓴 어린 한국 남자아이”
+이처럼 외형과 동작, 인상착의를 함께 표현하면 더 구체적인 이미지가 생성된다.
+
+② 표현수단(Medium)
+_ 3D 렌더링, 사진, 그림(유화, 수채화, 애니메이션 등)과 같이 이미지를 생성 소재를 뜻하며,
+이미지를 표현하는 프롬프트에서 중요하게 적용되는 부분이다.
+
+③ 배경(Background)
+_ 이미지의 배경을 프롬프트로 알려주는 것이며, ‘저녁 노을, 은하수, 해가 뜨는’과 같이 프롬프트를 작성한다.
+
+④ 스타일(Style)
+_ 이미지에 대한 예술적 표현양식을 설정할 수 있으며, ‘현실주의(realistic)’, ‘팝아트(pop art)’ 또는
+‘비현실적인(fantastical)’처럼 스타일 프롬프트도 이미지 생성에 큰 영향력을 끼칠 수 있다.
+
+2) 사진(이미지) 생성을 위한 추가 구성(3가지)
+① 색감(Color)
+_ 이미지의 전체적 색감(색상)을 나타낼 수 있으며, ‘색상: 블랙블루, 남색의 음영으로 보완된 하늘색’이라는
+프롬프트를 추가함으로써 생각하고 있는 이미지의 색감을 나타낼 수 있다.
+
+② 빛(Lighting), 해상도(Resolution)
+_ 이미지의 구성(Composition)을 프롬프트로 추가할 수 있다. 예를 들어서 구체적으로 카메라 설정값처럼
+‘해상도 4570만 화소, ISO감도: 64, 셔터스피트 1/100초’와 같이 이미지의 빛에 대한 질감을 표현할 수 있다.
+
+③ 화가(Artist)
+_ 화가 또는 작가(영화, 그림)의 화풍을 이미지에 담을 수 있다.
+‘미야자키 하야오 영화와 같은 몽환적인’ 프롬프트를 추가해 이미지의 화풍을 설정할 수 있다.
+
+
+## 예시
+현실적인 사진으로 표현된 검정색과 파란색으로 표현된 놀이터라는 공간에서 보라색 모자를 쓴 어린 한국 남자아이.
+스타일: 미야자키 하야오 영화의 몽환적인 영상의 융합.
+조명: 검은 밤하늘에서 반짝이는 은하수를 표현하고 있다.
+색상: 블랙블루, 남색의 음영으로 보완된 하늘색.
+구성: 해상도 4570만 화소, ISO 감도: 64, 셔터 스피드 1/100초, 떠다니는 행성들과 은하수를 배경으로 배치.
+
+
+## 묘사 :
 {description}
 """

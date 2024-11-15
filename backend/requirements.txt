@@ -1,13 +1,15 @@
 fastapi
 uvicorn
 python-dotenv
-# pydantic
+pydantic
 langchain-google-genai
 langchain_openai
 langchain_core
 langchain_community
 
+pymysql
 sqlalchemy
+
 databases
 
 stability-sdk

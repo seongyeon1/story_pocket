@@ -9,7 +9,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List
 from io import BytesIO
+from zipfile import ZipFile
 
+# MySQL 데이터베이스 설정 및 모델 가져오기
+# from database import SessionLocal, Story, StoryCut
+
+# 추가적인 모듈 가져오기
 from chat import *
 from story import *
 from img import *
@@ -36,14 +41,12 @@ def get_db():
     finally:
         db.close()
 
-# FastAPI 요청 모델 정의
+# 요청 모델 정의
 class ChatRequest(BaseModel):
     sex: str
     message: str
     session_id: str
 
-
-# Story 데이터 모델을 위한 Pydantic 모델 정의
 class StoryResponse(BaseModel):
     session_id: str
     story_text: str
@@ -51,27 +54,24 @@ class StoryResponse(BaseModel):
     class Config:
         from_attributes = True
 
-# API 엔드포인트 정의 (대화 생성)
+# API 엔드포인트 정의
+
+# 대화 생성
 @app.post("/chat/")
 async def chat(request: ChatRequest):
     try:
-        # multi_turn_chat 함수가 비동기가 아닌 경우 await 없이 호출
         response = multi_turn_chat(request.sex, request.message, request.session_id)
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
 
-# 전체 대화 기록을 조회하는 API 엔드포인트 정의
+# 대화 기록 조회
 @app.get("/history/{session_id}")
 async def get_chat_history(session_id: str):
-    # 해당 session_id가 존재하지 않으면 에러 반환
     if session_id not in store:
         raise HTTPException(status_code=404, detail="Session ID not found")
     
-    # 대화 히스토리 가져오기
     chat_history = await store[session_id].aget_messages()
-    
-    # 메시지의 종류에 따라 역할(role)을 지정해 대화 기록 반환
     history = [
         {
             "role": "user" if isinstance(msg, HumanMessage) else "ai",
@@ -79,10 +79,9 @@ async def get_chat_history(session_id: str):
         }
         for msg in chat_history
     ]
-    
     return {"session_id": session_id, "history": history}
 
-# 전체 대화 기록을 조회하고 이야기로 변환하여 데이터베이스에 저장하는 API 엔드포인트 정의
+# 이야기 생성 및 저장
 @app.get("/story/{session_id}")
 async def get_story(session_id: str, db: Session = Depends(get_db)):
     if session_id not in store:
@@ -93,79 +92,112 @@ async def get_story(session_id: str, db: Session = Depends(get_db)):
     
     try:
         final_story = story_chain.invoke({"story": story})
-        
-        # 데이터베이스에 이야기 저장
         story_entry = Story(session_id=session_id, story_text=final_story)
         db.add(story_entry)
         db.commit()
-        
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Story generation failed: {str(e)}")
     
     return {"session_id": session_id, "story": final_story}
 
-# 모든 이야기 조회 API 엔드포인트 정의
+# 이야기 조회
 @app.get("/stories", response_model=List[StoryResponse])
 async def get_all_stories(db: Session = Depends(get_db)):
     stories = db.query(Story).all()
     return stories
 
-# 이미지 생성 API 엔드포인트 정의
+# 이미지 생성
 @app.get("/generate-image/{session_id}")
 async def generate_image_from_story(session_id: str, db: Session = Depends(get_db)):
-    # DB에서 해당 session_id의 story_text 조회
     story = db.query(Story).filter(Story.session_id == session_id).first()
     if not story:
         raise HTTPException(status_code=404, detail="Session ID not found")
 
-    # story_text를 기반으로 이미지 생성
     img = generate_image(story=story.story_text)
-
-    # 이미지 데이터를 바이트 스트림으로 변환하여 반환
     img_byte_array = BytesIO()
     img.save(img_byte_array, format="PNG")
     img_byte_array.seek(0)
-    
     return StreamingResponse(img_byte_array, media_type="image/png")
 
-from fastapi.responses import StreamingResponse
-from zipfile import ZipFile
-import io
+# # 여러 이미지 생성
+# @app.get("/generate-images/{session_id}")
+# async def generate_images_from_story(session_id: str, db: Session = Depends(get_db)):
+#     story = db.query(Story).filter(Story.session_id == session_id).first()
+#     if not story:
+#         raise HTTPException(status_code=404, detail="Session ID not found")
 
-# 여러 이미지 생성 및 저장 API
+#     descriptions = story_to_img_chain.invoke({"story": story.story_text}).split('\n')
+#     zip_io = BytesIO()
+#     with ZipFile(zip_io, "w") as zip_file:
+#         for idx, description in enumerate(descriptions):
+#             prompt = description_to_prompt_chain.invoke({'description': description})
+#             img = generate_image(story=prompt)
+#             img_byte_array = BytesIO()
+#             img.save(img_byte_array, format="PNG")
+#             img_byte_array.seek(0)
+
+#             story_cut = StoryCut(
+#                 story_id=story.session_id,
+#                 description=description,
+#                 image_prompt=prompt,
+#                 image_data=img_byte_array.getvalue()
+#             )
+#             db.add(story_cut)
+#             zip_file.writestr(f"image_{idx+1}.png", img_byte_array.getvalue())
+
+#         db.commit()
+
+#     zip_io.seek(0)
+#     return StreamingResponse(zip_io, media_type="application/zip", headers={"Content-Disposition": "attachment;filename=images.zip"})
+
+
+# import os
+
+# class StoryCut(Base):
+#     __tablename__ = "story_cuts"
+#     id = Column(Integer, primary_key=True, autoincrement=True)
+#     story_id = Column(String(255), ForeignKey("stories.session_id"), nullable=False)
+#     description = Column(Text)
+#     image_prompt = Column(Text)
+#     image_path = Column(String(512))  # 이미지 파일 경로 저장
+
+import os
+
+# 이미지 저장 경로
+IMAGE_STORAGE_PATH = "./static/"
+
+# 이미지 저장 코드
 @app.get("/generate-images/{session_id}")
 async def generate_images_from_story(session_id: str, db: Session = Depends(get_db)):
-    # DB에서 해당 session_id의 story_text 조회
     story = db.query(Story).filter(Story.session_id == session_id).first()
     if not story:
         raise HTTPException(status_code=404, detail="Session ID not found")
 
-    # story_text를 여러 개의 묘사로 나누기
     descriptions = story_to_img_chain.invoke({"story": story.story_text}).split('\n')
-    
-    # 묘사마다 프롬프트와 이미지 생성 및 저장
-    zip_io = io.BytesIO()
+    zip_io = BytesIO()
     with ZipFile(zip_io, "w") as zip_file:
         for idx, description in enumerate(descriptions):
             prompt = description_to_prompt_chain.invoke({'description': description})
             img = generate_image(story=prompt)
-            
-            # 이미지 바이트 배열 생성
-            img_byte_array = BytesIO()
-            img.save(img_byte_array, format="PNG")
-            img_byte_array.seek(0)
 
-            # StoryCut 데이터베이스에 묘사, 프롬프트, 이미지 저장
+            # 이미지 저장 경로 생성
+            session_path = os.path.join(IMAGE_STORAGE_PATH, session_id)
+            os.makedirs(session_path, exist_ok=True)  # 경로가 없으면 생성
+
+            # 이미지 저장
+            img_filename = f"{idx+1}.png"
+            img_filepath = os.path.join(session_path, img_filename)
+            img.save(img_filepath)
+
+            # DB에 경로 저장
             story_cut = StoryCut(
                 story_id=story.session_id,
                 description=description,
                 image_prompt=prompt,
-                image_data=img_byte_array.getvalue()
+                image_path=img_filepath
             )
             db.add(story_cut)
-            
-            # ZIP 파일에 이미지 추가
-            zip_file.writestr(f"image_{idx+1}.png", img_byte_array.getvalue())
+            zip_file.write(img_filepath, os.path.join(session_id, img_filename))
 
         db.commit()
 
