@@ -18,13 +18,11 @@ docker-compose up -d
 - [ ] prompt engineering
 
 ## API 명세
-이 코드의 API 명세서는 각 엔드포인트의 목적, 요청 및 응답 형식에 대한 설명을 포함합니다.
-
 API 명세서
 
 기본 URL
 
-	•	http://<your-domain>:8000
+	•	http://localhost:8000
 
 1. /chat/
 
