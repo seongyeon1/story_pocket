@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/screens/elder/community/elder_community_screen.dart';
 import 'package:my_project/screens/elder/contants/elder_contants_screen.dart';
 import 'package:my_project/screens/elder/talk/talk_screen.dart';
 
@@ -19,7 +20,12 @@ class _ElderHomeScreenState extends State<ElderHomeScreen> {
   // 커뮤니티 화면으로 이동하는 함수
   void _showCommunityScreen() {
     // TODO: 커뮤니티 화면으로 이동하는 로직 구현
-    print('커뮤니티 화면으로 이동');
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ElderCommunityScreen(),
+      ),
+    );
   }
 
   // 동화책 구경하기 화면으로 이동하는 함수
@@ -56,9 +62,9 @@ class _ElderHomeScreenState extends State<ElderHomeScreen> {
             crossAxisSpacing: 16.0, // 가로 간격
             children: [
               _buildGridButton(_showTalkScreen, '이야기 하기', Icons.call),
-              _buildGridButton(_showCommunityScreen, '커뮤니티', Icons.forum),
+              _buildGridButton(_showCommunityScreen, '이야기 구경하기', Icons.forum),
               _buildGridButton(
-                  _showContantsScreen, '동화책 구경하기', Icons.menu_book),
+                  _showContantsScreen, '동화책 보러가기', Icons.menu_book),
               _buildGridButton(
                   _showPointScreen, '내 포인트 확인', Icons.monetization_on),
             ],

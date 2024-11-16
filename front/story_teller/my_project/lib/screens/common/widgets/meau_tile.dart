@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:my_project/models/story.dart';
 import 'package:my_project/screens/elder/contants/elder_story_detail_screen.dart';
 
-Widget buildStoryTile(Story story, int order, BuildContext context) {
+Widget buildStoryTile(
+    Story story, int order, BuildContext context, Widget storyScreen) {
   return ListTile(
     leading: const CircleAvatar(
       backgroundImage: AssetImage("assets/image/grandma_grandpa.png"),
     ),
-    title: Text(story.title),
+    title: Text("${order + 1}  ${story.title}"),
     trailing: Column(
       children: [
         Text('조회수: ${story.numberOfView}'),
@@ -19,7 +20,7 @@ Widget buildStoryTile(Story story, int order, BuildContext context) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ElderStoryDetailScreen(story: story),
+          builder: (context) => storyScreen,
         ),
       );
     },

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/models/story.dart';
 import 'package:my_project/data/story_dummy_data.dart';
-import 'package:my_project/screens/elder/contants/widgets/meau_tile.dart';
+import 'package:my_project/screens/common/widgets/meau_tile.dart';
+import 'package:my_project/screens/elder/contants/elder_story_detail_screen.dart';
 
 class ElderContantsScreen extends StatefulWidget {
   const ElderContantsScreen({super.key});
@@ -17,6 +18,8 @@ class _ElderContantsScreenState extends State<ElderContantsScreen> {
   @override
   void initState() {
     // TODO: implement initState
+
+    // 데이터 가져오기
     super.initState();
     stories = storyData
         .map((data) => Story(
@@ -32,7 +35,7 @@ class _ElderContantsScreenState extends State<ElderContantsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("동화책 구경하기"),
+        title: const Text("동화책"),
         actions: [
           IconButton(
             onPressed: () {},
@@ -55,7 +58,8 @@ class _ElderContantsScreenState extends State<ElderContantsScreen> {
           final story = stories[index];
           final order = index;
           //타일 위젯
-          return buildStoryTile(story, order, context);
+          Widget storyScreen = ElderContentsDetailScreen(story: story);
+          return buildStoryTile(story, order, context, storyScreen);
         },
         separatorBuilder: (BuildContext context, int index) {
           return const Divider();

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/models/story.dart';
 
-class ElderStoryDetailScreen extends StatelessWidget {
+class ElderContentsDetailScreen extends StatelessWidget {
   final Story story;
-  const ElderStoryDetailScreen({super.key, required this.story});
+  const ElderContentsDetailScreen({super.key, required this.story});
 
   @override
   Widget build(BuildContext context) {

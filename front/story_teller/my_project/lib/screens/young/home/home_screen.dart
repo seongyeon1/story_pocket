@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../widgets/search_bar.dart';
+import '../../common/widgets/search_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
