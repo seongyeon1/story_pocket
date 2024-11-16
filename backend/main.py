@@ -173,7 +173,7 @@ async def generate_images_from_story(session_id: str, db: Session = Depends(get_
     if not story:
         raise HTTPException(status_code=404, detail="Session ID not found")
 
-    descriptions = story_to_img_chain.invoke({"story": story.story_text}).split('\n')
+    descriptions = story_to_img_chain.invoke({"story": story.story_text}).split('\n\n')
     zip_io = BytesIO()
     with ZipFile(zip_io, "w") as zip_file:
         for idx, description in enumerate(descriptions):
