@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_project/screens/elder/contants/elder_contants_screen.dart';
-import 'package:my_project/screens/elder/talk/talk_screen.dart';
+import '../contants/elder_contants_screen.dart';
+import '../community/elder_community_screen.dart';
+import '../talk/talk_screen.dart';
 
 class ElderHomeScreen extends StatefulWidget {
   const ElderHomeScreen({super.key});
@@ -19,14 +20,16 @@ class _ElderHomeScreenState extends State<ElderHomeScreen> {
   // 커뮤니티 화면으로 이동하는 함수
   void _showCommunityScreen() {
     // TODO: 커뮤니티 화면으로 이동하는 로직 구현
-    print('커뮤니티 화면으로 이동');
+    // print('커뮤니티 화면으로 이동');
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => const ElderCommunityScreen()));
   }
 
   // 동화책 구경하기 화면으로 이동하는 함수
   void _showContantsScreen() {
     // TODO: 동화책 구경하기 화면으로 이동하는 로직 구현
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const ElderStoybookScreen()));
+        MaterialPageRoute(builder: (context) => const ElderContantsScreen()));
   }
 
   // 내 포인트 확인 화면으로 이동하는 함수
