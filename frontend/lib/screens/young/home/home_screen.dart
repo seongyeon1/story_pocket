@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../common/widgets/search_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,18 +20,18 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 //검색바
                 alignment: Alignment.center,
-                child: SearchBarForStories(
-                  trailing: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.keyboard_voice),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.search),
-                    ),
-                  ],
-                ),
+                // child: SearchBarForStories(
+                //   trailing: [
+                //     IconButton(
+                //       onPressed: () {},
+                //       icon: const Icon(Icons.keyboard_voice),
+                //     ),
+                //     IconButton(
+                //       onPressed: () {},
+                //       icon: const Icon(Icons.search),
+                //     ),
+                //   ],
+                // ),
               ),
               const Text(
                 "sdfsdf",

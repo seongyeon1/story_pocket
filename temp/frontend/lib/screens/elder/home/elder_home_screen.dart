@@ -26,7 +26,7 @@ class _ElderHomeScreenState extends State<ElderHomeScreen> {
   void _showContantsScreen() {
     // TODO: 동화책 구경하기 화면으로 이동하는 로직 구현
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const ElderContantsScreen()));
+        MaterialPageRoute(builder: (context) => const ElderStoybookScreen()));
   }
 
   // 내 포인트 확인 화면으로 이동하는 함수

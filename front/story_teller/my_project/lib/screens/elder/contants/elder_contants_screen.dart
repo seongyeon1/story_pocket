@@ -4,14 +4,14 @@ import 'package:my_project/data/story_dummy_data.dart';
 import 'package:my_project/screens/common/widgets/meau_tile.dart';
 import 'package:my_project/screens/elder/contants/elder_story_detail_screen.dart';
 
-class ElderContantsScreen extends StatefulWidget {
-  const ElderContantsScreen({super.key});
+class ElderStoybookScreen extends StatefulWidget {
+  const ElderStoybookScreen({super.key});
 
   @override
-  State<ElderContantsScreen> createState() => _ElderContantsScreenState();
+  State<ElderStoybookScreen> createState() => _ElderStoybookScreenState();
 }
 
-class _ElderContantsScreenState extends State<ElderContantsScreen> {
+class _ElderStoybookScreenState extends State<ElderStoybookScreen> {
   //동화 데이터 리스트 저장 변수
   List<Story> stories = [];
 

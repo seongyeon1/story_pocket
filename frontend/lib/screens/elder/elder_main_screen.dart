@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/screens/elder/profile/elder_profile_screen.dart';
-import 'home/elder_home_screen.dart';
+import 'elder_home_screen.dart';
 import 'talk/talk_screen.dart';
 
 class ElderMainScreen extends StatefulWidget {

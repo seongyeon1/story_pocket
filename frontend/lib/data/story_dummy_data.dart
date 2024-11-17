@@ -155,8 +155,4 @@ final storyData = [
     "story": "눈이 펑펑 내리면 친구들과 눈싸움을 했단다. 눈덩이를 뭉쳐서...",
     "numberOfView": 1415
   },
-<<<<<<< HEAD:front/story_teller/my_project/lib/data/story_dummy_data.dart
 ];
-=======
-];
->>>>>>> seongyeon:frontend/lib/data/story_dummy_data.dart
