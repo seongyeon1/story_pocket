@@ -25,6 +25,18 @@ class ElderStorybookDefailScreen extends StatelessWidget {
           )
         ],
       ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("작성자 : ${story.author}"),
+
+            //이야기
+            Text(story.story),
+          ],
+        ),
+      ),
     );
   }
 }
