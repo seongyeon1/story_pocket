@@ -3,17 +3,16 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../../models/story.dart';
 import '../../common/widgets/menu_tile.dart';
-import 'elder_story_detail_screen.dart';
+import 'elder_community_detail_screen.dart';
 
-class ElderContantsScreen extends StatefulWidget {
-  const ElderContantsScreen({super.key});
+class ElderCommunityScreen extends StatefulWidget {
+  const ElderCommunityScreen({super.key});
 
   @override
-  State<ElderContantsScreen> createState() => _ElderContantsScreenState();
+  State<ElderCommunityScreen> createState() => _ElderCommunityScreenState();
 }
 
-class _ElderContantsScreenState extends State<ElderContantsScreen> {
-  // 동화 데이터 리스트 저장 변수
+class _ElderCommunityScreenState extends State<ElderCommunityScreen> {
   List<Story> stories = [];
   bool isLoading = true;
 
@@ -49,7 +48,7 @@ class _ElderContantsScreenState extends State<ElderContantsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("동화책"),
+        title: const Text("이야기 구경하기"),
         actions: [
           IconButton(
             onPressed: () {},
@@ -65,15 +64,13 @@ class _ElderContantsScreenState extends State<ElderContantsScreen> {
           )
         ],
       ),
-      // 로딩 상태
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator()) // 로딩 상태 표시
           : ListView.separated(
               itemCount: stories.length,
               itemBuilder: (context, index) {
                 final story = stories[index];
                 final order = index;
-
                 // 타일 위젯
                 Widget storyScreen = ElderCommunityDetailScreen(story: story);
                 return buildStoryTile(story, order, context, storyScreen);
