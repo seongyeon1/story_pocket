@@ -14,6 +14,11 @@ class ElderStoybookScreen extends StatefulWidget {
 class _ElderStoybookScreenState extends State<ElderStoybookScreen> {
   //동화 데이터 리스트 저장 변수
   List<Story> stories = [];
+  List<Story> originalStories = [];
+
+  //버튼 텍스트 스타일
+  final _header_meau_style =
+      const TextStyle(fontSize: 20, fontWeight: FontWeight.w500);
 
   @override
   void initState() {
@@ -29,6 +34,7 @@ class _ElderStoybookScreenState extends State<ElderStoybookScreen> {
               numberOfView: data['numberOfView'] as int,
             ))
         .toList();
+    originalStories = List.from(stories);
   }
 
   @override
@@ -52,18 +58,100 @@ class _ElderStoybookScreenState extends State<ElderStoybookScreen> {
         ],
       ),
       //동화 리스트
-      body: ListView.separated(
-        itemCount: storyData.length,
-        itemBuilder: (context, index) {
-          final story = stories[index];
-          final order = index;
-          //타일 위젯
-          Widget storyScreen = ElderStorybookDefailScreen(story: story);
-          return buildStoryTile(story, order, context, storyScreen);
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return const Divider();
-        },
+      body: Column(
+        children: [
+          const SizedBox(height: 5),
+          //메뉴//
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal, // 가로 스크롤 설정
+            child: Row(
+              children: [
+                const SizedBox(width: 10),
+                MenuButton(
+                  header_meau_style: _header_meau_style,
+                  title: "# 최신순 동화",
+                  onPressed: () {
+                    //최신순 정렬
+                    setState(() {
+                      // 원본 데이터로 다시 정렬
+                      stories = List.from(originalStories);
+                    });
+                  },
+                ),
+                const SizedBox(width: 20),
+                MenuButton(
+                  header_meau_style: _header_meau_style,
+                  title: "# 인기순 동화",
+                  onPressed: () {
+                    //조회수 정렬
+                    setState(() {
+                      stories.sort(
+                          (a, b) => b.numberOfView.compareTo(a.numberOfView));
+                    });
+                  },
+                ),
+                const SizedBox(width: 20),
+                MenuButton(
+                  header_meau_style: _header_meau_style,
+                  title: "# 급상승 동화",
+                  onPressed: () {
+                    stories.sort(
+                        (a, b) => b.numberOfView.compareTo(a.numberOfView));
+                  },
+                ),
+                const SizedBox(width: 40),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 10),
+          //게시글//
+          Expanded(
+            child: ListView.separated(
+              itemCount: storyData.length,
+              itemBuilder: (context, index) {
+                final story = stories[index];
+                final order = index;
+                //타일 위젯
+                Widget storyScreen = ElderStorybookDefailScreen(story: story);
+                return buildStoryTile(story, order, context, storyScreen);
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const Divider();
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MenuButton extends StatelessWidget {
+  const MenuButton({
+    super.key,
+    required this.onPressed,
+    required TextStyle header_meau_style,
+    required this.title,
+  }) : _header_meau_style = header_meau_style;
+
+  final TextStyle _header_meau_style;
+  final String title;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size(200, 40),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
+      ),
+      onPressed: onPressed,
+      child: Text(
+        title,
+        style: _header_meau_style,
       ),
     );
   }
