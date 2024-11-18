@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_project/screens/elder/story/elder_contants_screen.dart';
+import 'package:my_project/screens/elder/story/elder_story_screen.dart';
 import 'package:my_project/screens/elder/storybook/elder_storybook_screen.dart';
 import 'package:my_project/screens/elder/talk/talk_screen.dart';
 
