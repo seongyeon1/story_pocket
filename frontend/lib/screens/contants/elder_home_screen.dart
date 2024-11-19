@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_project/screens/elder/story/elder_story_screen.dart';
-import 'package:my_project/screens/elder/storybook/elder_storybook_screen.dart';
-import 'package:my_project/screens/elder/talk/talk_screen.dart';
+import 'package:my_project/screens/contants/story/elder_story_screen.dart';
+import 'package:my_project/screens/contants/storybook/elder_storybook_screen.dart';
+import 'package:my_project/screens/contants/talk/talk_screen.dart';
 
 class ElderHomeScreen extends StatefulWidget {
   const ElderHomeScreen({super.key});

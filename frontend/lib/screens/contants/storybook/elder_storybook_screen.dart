@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_project/models/story.dart';
 import 'package:my_project/data/story_dummy_data.dart';
 import 'package:my_project/screens/common/widgets/story_tile.dart';
-import 'package:my_project/screens/elder/storybook/elder_storybook_defail_screen.dart';
+import 'package:my_project/screens/contants/storybook/elder_storybook_defail_screen.dart';
 
 class ElderStoybookScreen extends StatefulWidget {
   const ElderStoybookScreen({super.key});

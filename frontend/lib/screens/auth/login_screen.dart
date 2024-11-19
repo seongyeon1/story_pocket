@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../elder/elder_main_screen.dart';
-import '../../young/young_main_screen.dart';
+import 'package:my_project/screens/auth/id_pw_screen.dart';
+import '../contants/elder_main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,21 +24,11 @@ class _LoginScreenState extends State<LoginScreen> {
     ),
   );
 
-  /* 65세 미만 MainScreen으로 이동 */
-  void _navigateToMainScreen() {
-    Navigator.pushReplacement(
-      //이전 페이지 스택에서 제거
+  /* 로그인 페이지로 이동 */
+  void _navigateToLoginPage() {
+    Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const YoungMainScreen()),
-    );
-  }
-
-  /* 65세 이상MainScreen으로 이동 */
-  void _navigateToElderMainScreen() {
-    Navigator.pushReplacement(
-      //이전 페이지 스택에서 제거
-      context,
-      MaterialPageRoute(builder: (context) => const ElderMainScreen()),
+      MaterialPageRoute(builder: (context) => const IdPwScreen()),
     );
   }
 
@@ -48,8 +38,8 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/image/loginpage_background.png'),
-            fit: BoxFit.cover, //사진 비율 유지
+            image: AssetImage('assets/image/login/loginpage_background.png'),
+            fit: BoxFit.cover, //사진 비율 xw유지
           ),
         ),
         child: Stack(
@@ -58,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Align(
               alignment: const Alignment(-1.1, -0.6),
               child: Image.asset(
-                'assets/image/login_sub_title.png',
+                'assets/image/login/login_sub_title.png',
                 width: 200,
               ),
             ),
@@ -66,32 +56,43 @@ class _LoginScreenState extends State<LoginScreen> {
             Align(
               alignment: const Alignment(0, -0.30), //위로 35%
               child: Image.asset(
-                'assets/image/login_page_title.png',
+                'assets/image/login/login_page_title.png',
                 width: 300,
               ),
             ),
             /* 로그인 버튼 */
             Align(
               alignment: const Alignment(0, 0.6),
-              child: ElevatedButton(
-                style: _startButtonStyle,
-                onPressed: _navigateToMainScreen,
-                child: Text(
-                  "이야기 시작하기",
-                  style: _startStyle,
+              child: IconButton(
+                icon: Image.asset(
+                  "assets/image/login/naver_login.png",
+                  width: 200,
                 ),
+                onPressed: () {},
               ),
             ),
+            Align(
+              alignment: const Alignment(0, 0.73),
+              child: IconButton(
+                icon: Image.asset(
+                  "assets/image/login/kakao_login.png",
+                  width: 200,
+                ),
+                onPressed: () {},
+              ),
+            ),
+
             /* (임시) 65세 로그인 */
             Align(
-              alignment: const Alignment(0, 0.7),
+              alignment: const Alignment(0, 0.80),
               child: TextButton(
-                onPressed: _navigateToElderMainScreen,
+                onPressed: _navigateToLoginPage,
                 child: const Text(
-                  "65세 이상",
+                  "이메일로 로그인하기",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 15,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
